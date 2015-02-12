@@ -3,6 +3,7 @@
 #include <netinet/in.h>
 #include <strings.h>
 #include <stdio.h>
+#include <ctype.h>
 
 int main(int argc, char**argv){
 
@@ -11,6 +12,8 @@ int main(int argc, char**argv){
 	socklen_t len;
 	char mesg[1000];
 	char* banner = "Hello UDP client! This is UDP server";
+	// the count variable for the loop
+	int i;
 	
 	sockfd=socket(AF_INET,SOCK_DGRAM,0);
 	servaddr.sin_family = AF_INET;
@@ -19,12 +22,26 @@ int main(int argc, char**argv){
 	
 	bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
 	len = sizeof(cliaddr);
+	// wait for the packet with no of sentences
+	
+	//use
+	n=recvfrom(sockfd,mesg,1000,0,(struct sockaddr*)&cliaddr,&len);
+	//mesg will have the number
+	//now get the int value of it somehow ;)
+	//number is that value
+
+	
+	//send the acknowledgement
+	char* ack = "ack"; 
+	//use
+	sendto(sockfd,ack,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
 	
 	//only added while loop(inside is not changed)
-	while(1){
+	for( i = 0 ; i < number ; i++){
 	
-		n=recvfrom(sockfd,mesg,1000,0,(structsockaddr*)&cliaddr,&len);
+		n=recvfrom(sockfd,mesg,1000,0,(struct sockaddr*)&cliaddr,&len);
 	//to echo the message changed banner from below to mesg
+		toupper(mesg);
 		sendto(sockfd,mesg,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
 	
 		mesg[n] = 0;
