@@ -24,8 +24,8 @@ int main(int argc, char**argv){
 	while(1){
 	
 		n=recvfrom(sockfd,mesg,1000,0,(structsockaddr*)&cliaddr,&len);
-	
-		sendto(sockfd,banner,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
+	//to echo the message changed banner from below to mesg
+		sendto(sockfd,mesg,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
 	
 		mesg[n] = 0;
 		printf("Received: %s\n",mesg);

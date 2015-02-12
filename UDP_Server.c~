@@ -20,12 +20,16 @@ int main(int argc, char**argv){
 	bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
 	len = sizeof(cliaddr);
 	
-	n=recvfrom(sockfd,mesg,1000,0,(structsockaddr*)&cliaddr,&len);
+	//only added while loop(inside is not changed)
+	while(1){
 	
-	sendto(sockfd,banner,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
+		n=recvfrom(sockfd,mesg,1000,0,(structsockaddr*)&cliaddr,&len);
 	
-	mesg[n] = 0;
-	printf("Received: %s\n",mesg);
+		sendto(sockfd,banner,n,0,(struct sockaddr*)&cliaddr,sizeof(cliaddr));
 	
+		mesg[n] = 0;
+		printf("Received: %s\n",mesg);
+		
+	}
 	return 0;
 }
