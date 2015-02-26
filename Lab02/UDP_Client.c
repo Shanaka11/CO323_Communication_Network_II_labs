@@ -35,6 +35,7 @@ int main(int argc, char**argv){
 	//to send the number to the server
 	int i;
 	// add the loop here
+	/*
 	for( i = 0 ; i < num ; i++){
 		
 		printf("Enter the sentence : ");
@@ -44,7 +45,7 @@ int main(int argc, char**argv){
 		recvline[n]=0;
 	
 		printf("Received: %s\n",recvline);
-	}
+	}*/
 	//end it here
 	
 	return 0;

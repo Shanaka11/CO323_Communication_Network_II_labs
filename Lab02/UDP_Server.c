@@ -7,6 +7,8 @@
 
 int main(int argc, char**argv){
 
+	printf("Server started :D");
+	
 	int sockfd,n;
 	struct sockaddr_in servaddr, cliaddr;
 	socklen_t len;
