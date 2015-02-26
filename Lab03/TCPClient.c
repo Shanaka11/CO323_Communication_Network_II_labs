@@ -9,7 +9,7 @@ int main(int argc, char**argv){
 	int sockfd,n;
 
 	struct sockaddr_in servaddr;
-	char banner[] = "Hello TCP server! This is TCP client";
+	char request[] = "TCPClient.c";
 	char buffer[1000];
 	
 	if (argc != 2){
@@ -23,13 +23,22 @@ int main(int argc, char**argv){
 
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr=inet_addr(argv[1]);
-	servaddr.sin_port=htons(32000);
+	servaddr.sin_port=htons(32001);
 	connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
-	sendto(sockfd,banner,strlen(banner),0, (struct sockaddr *)&servaddr,sizeof(servaddr));
+	
+	sendto(sockfd,request,strlen(request),0, (struct sockaddr *)&servaddr,sizeof(servaddr));
 
 	n=recvfrom(sockfd,buffer,10000,0,NULL,NULL);
 
 	buffer[n]=0;printf("Received:%s\n",buffer);
+	
+	while(1){
+		
+		
+		n=recvfrom(sockfd,buffer,10000,0,NULL,NULL);
+		buffer[n]=0;printf("%s",buffer);
+	
+	}
 	
 	return 0;
 }

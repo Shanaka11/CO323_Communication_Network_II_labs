@@ -14,7 +14,7 @@ int main(int argc, char**argv){
 	struct sockaddr_in servaddr,cliaddr;
 	socklen_t clilen;
 	
-	char* banner = "Hello TCP client! This is TCP server";
+	char* banner = "3000";
 	char buffer[1000];
 
 /* one socket is dedicated to listening */
@@ -24,7 +24,7 @@ int main(int argc, char**argv){
 binding the socket */
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
-	servaddr.sin_port=htons(32000);
+	servaddr.sin_port=htons(32001);
 /* binding */
 	bind(listenfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
 	
@@ -40,6 +40,35 @@ binding the socket */
 	sendto(connfd,banner,strlen(banner),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
 	
 	printf("Received:%s\n",buffer);
+	
+	//reading from the file
+	char ch;
+   FILE *fp;
+   fp = fopen(buffer,"r"); // read mode
+ 	 int i = 0;
+ 	// char buf[500];
+ 
+   while( ( ch = fgetc(fp) ) != EOF ){
+      //printf("%c",ch);
+      buffer[i] = ch;
+      i++;
+      //printf("%d ",i);
+     if(i > 999){
+      	i = 0;
+      	sendto(connfd,buffer,strlen(buffer),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+     }
+ 	 }
+ 	 //printf("%d " , i);
+ 	 if( i > 0){
+ 	 	
+ 	 	//printf("half filled\n");
+ 		sendto(connfd,buffer,strlen(buffer),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+ 	 
+ 	 }
+ 	 //send EOF to disconnect the client
+ 	// sendto(connfd),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+   fclose(fp);
+	
 	return 0;
 	
 }
