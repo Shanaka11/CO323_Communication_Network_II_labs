@@ -65,8 +65,8 @@ binding the socket */
  		sendto(connfd,buffer,strlen(buffer),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
  	 
  	 }
- 	 //send EOF to disconnect the client
- 	// sendto(connfd),0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+ 	 
+ 	
    fclose(fp);
 	
 	return 0;

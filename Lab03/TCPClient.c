@@ -32,11 +32,25 @@ int main(int argc, char**argv){
 
 	buffer[n]=0;printf("Received:%s\n",buffer);
 	
+	FILE *pFile;
+	
+
+
 	while(1){
 		
 		
 		n=recvfrom(sockfd,buffer,10000,0,NULL,NULL);
-		buffer[n]=0;printf("%s",buffer);
+		buffer[n]=0;
+		//printf("%s",buffer);
+		pFile=fopen("myfile2.txt", "a");
+		if(pFile==NULL) {
+    		perror("Error opening file.");
+		}else {
+    		//while(fgets(buffer, sizeof(buffer), pFile)) {
+        	fprintf(pFile, "%s", buffer);
+    	}
+
+		fclose(pFile);
 	
 	}
 	
